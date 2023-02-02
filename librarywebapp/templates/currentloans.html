@@ -1,7 +1,70 @@
+<!-- Lu-Yung Huang  1154980-->
+
 {% extends "base.html" %}
 {% block content %}
 <!-- code in here to display a list of loans -->
 <!-- loanlist is the variable passed in containing list of loans -->
+
+<h2>Current Loans List</h2>
+<h3>A list of all Loans</h3>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            
+            <th scope="col">First Name</th>
+            <th scope="col">Family Name</th>
+            <th scope="col">Copy ID</th>
+            <th scope="col">Book Title</th>
+            <th scope="col">Is it returned?</th>
+        </tr>
+
+
+    </thead>
+
+    
+
+    {% set names=[] %}
+    {% for loan in loanlist %}
+
+        {% if loan[12] == "eBook" %}
+            {% set col="green" %}
+        {% elif loan[12] == "Audio Book" %}
+            {% set col="yellow" %}
+        {% else %}
+            {% set col="white" %}
+        {% endif %}
+
+        {% if loan[6] %}
+            {% set status="Returned"%}
+        {% else %}
+            {% set status="On Loan" %}
+        {% endif %}
+
+        
+    
+
+        <tr bgcolor = "{{col}}">
+            {% if (loan[1], loan[2]) in names %}
+
+                {% for entry in ["", "",loan[4], loan[8], status] %}
+                    <td scope="row">{{entry}}</td>
+                {% endfor %}
+
+            {% else %}
+
+                {% for entry in [loan[1], loan[2], loan[4], loan[8], status] %}
+                    <td scope="row">{{entry}}</td>
+                    {% set names = names.append(  (loan[1], loan[2])  ) %}
+                    
+
+                {% endfor %}
+
+            {% endif %}
+            
+        </tr>
+    {% endfor %}
+</table>
 
 
 {% endblock %}

@@ -1,0 +1,77 @@
+<!-- Lu-Yung Huang  1154980-->
+
+{% extends "base.html" %}
+{% block content %}
+<!-- code in here to display a list of loans -->
+<!-- loanlist is the variable passed in containing list of loans -->
+
+
+</br>
+
+<h2>Book Copies List</h2>
+<h3> Copies of {{book_title[0][0]}} by {{book_title[0][1]}} </h3>
+
+<!-- Table -->
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Book Copy ID</th>
+            <th scope="col">Format</th>
+            <th scope="col">Is it returned?</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Overdue?</th>
+
+        </tr>
+
+
+    </thead>
+    <tbody>
+        
+        
+    <!-- Getting data from booklist and fill them into rows -->
+        
+    {% for copy in bookcopies %}
+
+        {% if copy[2] or copy[2]==None %}
+            {% set status= 'Returned' %}
+        {% else %}
+            {% set status= 'On Loan' %}
+        {% endif %}
+
+        {% if copy[3] != None %} 
+
+            {% set due = copy[3] + loan_period %}
+
+            {% if (today - copy[3]) > overdue_period and not copy[2]%}
+                {% set overdue = "Yes" %}
+            {% else %}
+                {% set overdue = "No" %}
+            {% endif %}
+
+        {% else %}
+            {% set due = "-"%}
+            {% set overdue = "-" %}
+        
+        {% endif %}
+        
+
+            <tr>
+                {% for entry in [copy[0], copy[1], status, due, overdue] %}
+                <td scope="row">{{entry}}</td>
+                {% endfor %}
+            </tr>
+    {% endfor %}
+
+    
+
+    </tbody>
+</table>
+
+<h4>The standard loan period is 28 days (due date). </br>
+    Books are reported as overdue (list of overdue books) </br>
+    once they have been on loan longer than 35 days.</h4>
+
+
+
+{% endblock %}

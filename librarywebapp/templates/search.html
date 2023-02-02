@@ -2,9 +2,19 @@
 
 {% extends "base.html" %}
 {% block content %}
-<!-- code in here to display a list of books-->
-<h2>Book List</h2>
-<h3>A list of all books in our collection</h3>
+
+
+<br/>
+<h2>You searched for ....</h2> {{searched}}
+
+<br/>
+
+
+
+{% if results|length > 0 %}
+
+
+<!-- code in here to display a list of books that contain searched string-->
 
 <!-- Table -->
 
@@ -21,22 +31,28 @@
 
 
     </thead>
-    <tbody>
-        
+    <tbody>        
         
     <!-- Getting data from booklist and fill them into rows -->
         
-    {% for book in booklist %}
+    {% for book in results %}
         <tr>
-            {% set id = book[0] %}
             {% for entry in book %}
-            <td scope="row">{{entry}}</td>
+                <td scope="row">{{entry}}</td>
+
             {% endfor %}
-            <td><a href="{{ url_for('bookcopies', book_id=id) }}"> View copies of this book </a></td>
+            <td><a href="{{ url_for('bookcopies', book_id=book[0]) }}"> View copies of this book </a></td>
+
         </tr>
     {% endfor %}
 
     </tbody>
 </table>
+
+{% else %}
+
+    <h2> Sorry, no results for {{searched}}, please try again. </h2>
+
+{% endif %}
 
 {% endblock %}

@@ -1,7 +1,37 @@
+<!-- Lu-Yung Huang  1154980-->
+
 {% extends "base.html" %}
 {% block content %}
 <!-- code in here to display a list of borrowers -->
 <!-- borrowerlist is the variable passed in containing list of loans -->
+<h2>Borrower List</h2>
+<h3>A list of all borrowers</h3>
 
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Borrower ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Family Name</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">House Number/Name</th>
+            <th scope="col">Street</th>
+            <th scope="col">Town</th>
+            <th scope="col">City</th>
+            <th scope="col">Postal Code</th>
+        </tr>
+
+
+    </thead>
+
+    {% for borrower in borrowerlist %}
+        <tr>
+            {% for entry in borrower %}
+                <td scope="row">{{entry}}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
 
 {% endblock %}

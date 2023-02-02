@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="False" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+              </li>
+      
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('listbooks') }}">List Books</a>
+              </li>
+              
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('loanbook') }}">Loan Book</a>
+              </li>
+      
+               <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('listborrowers') }}">List Borrowers</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('currentloans') }}">Current Loans</a>
+              </li>
+              
+              
+            </ul>
+            <form method="POST" action="{{ url_for('search')}}" class="d-flex">
+                {{ form.hidden_tag() }}
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched" required>
+              <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+          </div>
+
+    </div>
+    
+  </nav>
