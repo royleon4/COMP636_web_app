@@ -1,0 +1,41 @@
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('staff') }}">Home</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('stafflistbooks') }}">List Books</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('staffloanbook') }}">Loan Book</a>
+              </li>
+      
+               <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('listborrowers') }}">List Borrowers</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('staffcurrentloans') }}">All Loans</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('overdueloans') }}">Overdue Loans</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('newBorrower') }}">Add Borrower</a>
+              </li>
+
+
+
+            </ul>
+            <form method="POST" action="{{ url_for('staffsearch')}}" class="d-flex">
+                {{ form.hidden_tag() }}
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched" required>
+              <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+          </div>

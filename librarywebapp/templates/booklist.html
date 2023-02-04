@@ -1,42 +1,24 @@
 <!-- Lu-Yung Huang  1154980-->
+{% set baseurl = (request.url_rule|string()).split("/")[1] %}
 
-{% extends "base.html" %}
+{% if baseurl == staff %}
+    {% extends "staff.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
+
 {% block content %}
+
+
+
+
+
 <!-- code in here to display a list of books-->
 <h2>Book List</h2>
 <h3>A list of all books in our collection</h3>
 
+
+
 <!-- Table -->
-
-<table class="table table-hover table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Book ID</th>
-            <th scope="col">Title</th>
-            <th scope="col">Author</th>
-            <th scope="col">Type</th>
-            <th scope="col">Year of Publication</th>
-            <th scope="col">Description</th>
-        </tr>
-
-
-    </thead>
-    <tbody>
-        
-        
-    <!-- Getting data from booklist and fill them into rows -->
-        
-    {% for book in booklist %}
-        <tr>
-            {% set id = book[0] %}
-            {% for entry in book %}
-            <td scope="row">{{entry}}</td>
-            {% endfor %}
-            <td><a href="{{ url_for('bookcopies', book_id=id) }}"> View copies of this book </a></td>
-        </tr>
-    {% endfor %}
-
-    </tbody>
-</table>
-
+{% include 'booktable.html' %}
 {% endblock %}

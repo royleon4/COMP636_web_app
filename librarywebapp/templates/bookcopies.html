@@ -1,6 +1,13 @@
 <!-- Lu-Yung Huang  1154980-->
 
-{% extends "base.html" %}
+{% set baseurl = (request.url_rule|string()).split("/")[1] %}
+
+{% if baseurl == staff %}
+    {% extends "staff.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
+
 {% block content %}
 <!-- code in here to display a list of loans -->
 <!-- loanlist is the variable passed in containing list of loans -->

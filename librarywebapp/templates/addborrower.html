@@ -1,0 +1,82 @@
+<!-- Lu-Yung Huang  1154980-->
+
+{% set baseurl = (request.url_rule|string()).split("/")[1] %}
+
+{% if baseurl == staff %}
+    {% extends "staff.html" %}
+
+{% block content %}
+
+
+</br>
+<div class="container">
+<h2>Create a Borrower</h2>
+
+
+
+<div class="w-50 p-3 text-center">
+
+    <form  action="{{ url_for('createBorrower') }}" method="post">
+        {{ form.hidden_tag() }}
+      <!-- Borrower input -->
+        <div class="form-outline mb-4">
+            <label>First Name</label>
+
+            <input class="form-control me-2" type="input" placeholder="First Name" aria-label="firstname" name="firstname" required>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label>Family Name</label>
+
+            <input class="form-control me-2" type="input" placeholder="Family Name" aria-label="familyname" name="familyname" required>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label>DoB</label>
+            <label> {{dob}} </label>
+
+            <input class="form-control me-2" type="date" id="dob" aria-label="DoB" name="dob"
+               value="1900-01-01"
+               min="1950-01-01" max="2040-12-31" required />
+        </div>
+
+        <div class="form-outline mb-4">
+            <label>House Number/Name</label>
+
+            <input class="form-control me-2" type="input" placeholder="House Number/Name" aria-label="housenumber" name="housenumber" required>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label>Street</label>
+
+            <input class="form-control me-2" type="input" placeholder="Street" aria-label="street" name="street" required>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label>Town</label>
+
+            <input class="form-control me-2" type="input" placeholder="Town" aria-label="town" name="town" required>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label>City</label>
+
+            <input class="form-control me-2" type="input" placeholder="City" aria-label="city" name="city" required>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label>Postal Code</label>
+
+            <input class="form-control me-2" type="input" placeholder="Postal Code" aria-label="postcode" name="postcode" required>
+        </div>
+    
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary btn-block">
+        Submit</button>
+    </form>
+    
+</div>
+
+{% endblock %}
+
+{% endif %}
