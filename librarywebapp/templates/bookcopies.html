@@ -46,7 +46,7 @@
             {% set status= 'On Loan' %}
         {% endif %}
 
-        {% if copy[3] != None %} 
+        {% if copy[3] != None and status != "Returned" %} 
 
             {% set due = copy[3] + loan_period %}
 
