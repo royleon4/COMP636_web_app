@@ -30,7 +30,21 @@ def addloan():
 def stafflistbooks():
     
     booklist = listbooks_func()   
-    return render_template("booklist.html", booklist = booklist)
+    loansummary = loansummary_func()
+    new_list = []
+
+    counter = 0
+    for book in booklist:
+        book = list(book)
+        book.append(int(loansummary[counter][2]))
+        counter+=1
+        print(book)
+        new_list.append(tuple(book))
+    # print(new_list)
+    # print(booklist)
+
+        
+    return render_template("booklist.html", booklist = new_list)
 
 def listborrowers():
     borrowerList = listborrowers_func()
@@ -51,7 +65,7 @@ def staffsearch():
         searched = form.searched.data
         searched_list = search_func(searched)
 
-    return render_template("search.html", form=form, results=searched_list, searched = searched)
+    return render_template("search.html", form=form, booklist=searched_list, searched = searched)
 
 
 def staffbookcopies(book_id):
@@ -142,5 +156,16 @@ def overdueloans():
     loan_period=timedelta(days = 28),
     overdue_period=timedelta(days = 35))
     
-    
+
+def loansummary():
+    table = loansummary_func()
+
+    # print(table)
+
+    return render_template("loansummary.html", summary=table)
+
+def borrowersummary():
+    table = borrowersummary_func()
+
+    return render_template("borrowersummary.html", summary=table)
     

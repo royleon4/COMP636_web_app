@@ -46,6 +46,8 @@ app.add_url_rule(f'{pstaff}/newborrower', view_func=staff.newBorrower)
 app.add_url_rule(f'{pstaff}/borrower/create', view_func=staff.createBorrower, methods=['POST'])
 app.add_url_rule(f'{pstaff}/loan/return/<int:borrowerid>&<int:bookid>', view_func=staff.loanreturn, methods=['POST'])
 
+app.add_url_rule(f'{pstaff}/summary/book', view_func=staff.loansummary)
+app.add_url_rule(f'{pstaff}/summary/borrower', view_func=staff.borrowersummary)
 
 
 

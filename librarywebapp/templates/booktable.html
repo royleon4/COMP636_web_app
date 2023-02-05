@@ -11,6 +11,9 @@
             <th scope="col">Type</th>
             <th scope="col">Year of Publication</th>
             <th scope="col">Description</th>
+            {% if baseurl == staff %}
+                <th scope="col">Loan times</th>
+            {% endif %}
         </tr>
 
 
@@ -19,24 +22,34 @@
         
         
     <!-- Getting data from booklist and fill them into rows -->
-        
+
     {% for book in booklist %}
+    
+
+    
+        
         <tr>
             {% set id = book[0] %}
+            
             {% for entry in book %}
-            <td scope="row">{{entry}}</td>
+                <td scope="row">{{entry}}</td>
             {% endfor %}
+
+
+
 
             {% if baseurl == staff %}
                 {% set url = 'staffbookcopies' %}
             {% else %}
                 {% set url = 'bookcopies' %}
             {% endif %}
+            
 
             
 
             <td><a href="{{ url_for(url, book_id=id) }}"> View copies of this book </a></td>
         </tr>
+    
     {% endfor %}
 
     </tbody>

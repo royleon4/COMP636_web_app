@@ -17,6 +17,23 @@ def getCursor():
 
 def listbooks_func():
     connection = getCursor()
+
+
+    # sql_books = "SELECT * FROM books;"
+
+    # sql_loansum = """SELECT *, ls.loantimes FROM books b 
+    #             inner join 
+    #                 (Select title, bookid as ID, sum(Times) as loantimes from (select b.booktitle as title, b.bookid as bookid, count(bc.bookcopyid) as Times 
+    #                 FROM bookcopies bc 
+    #                 left join loans l on bc.bookcopyid=l.bookcopyid
+    #                 inner join books b on bc.bookid=b.bookid
+    #                 group by bc.bookcopyid) as cpt 
+    #                 group by bookid 
+    #                 order by bookid) as ls
+    #             WHERE ls.ID=b.bookid;
+                    
+    #                 """
+                
     connection.execute("SELECT * FROM books;")
     bookList = connection.fetchall()
     return bookList 
@@ -172,5 +189,30 @@ def loanreturn_func(bookcopy_id, borrower_id):
     
     return 200
 
+def loansummary_func():
+    sql = """Select title, bookid as ID, sum(Times) as loantimes from (select b.booktitle as title, b.bookid as bookid, count(bc.bookcopyid) as Times 
+				FROM bookcopies bc 
+				left join loans l on bc.bookcopyid=l.bookcopyid
+				inner join books b on bc.bookid=b.bookid
+				group by bc.bookcopyid) as cpt 
+                group by bookid 
+                order by bookid;"""
 
-    
+    connection = getCursor()
+    connection.execute(sql)
+    table = connection.fetchall()
+
+    return table
+
+
+def borrowersummary_func():
+    sql = """SELECT br.borrowerid as ID, br.firstname, br.familyname, count(l.borrowerid) as loans 
+                FROM borrowers br 
+                left join loans l on br.borrowerid=l.borrowerid 
+                group by br.borrowerid;"""
+
+    connection = getCursor()
+    connection.execute(sql)
+    table = connection.fetchall()
+
+    return table

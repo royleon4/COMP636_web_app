@@ -30,7 +30,7 @@ def search():
         searched = form.searched.data
         searched_list = search_func(searched)
 
-    return render_template("search.html", form=form, results=searched_list, searched = searched)
+    return render_template("search.html", form=form, booklist=searched_list, searched = searched)
 
 
 def bookcopies(book_id):

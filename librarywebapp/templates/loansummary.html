@@ -1,0 +1,55 @@
+<!-- Lu-Yung Huang  1154980-->
+
+{% set baseurl = (request.url_rule|string()).split("/")[1] %}
+
+{% if baseurl == staff %}
+    {% extends "staff.html" %}
+{% else %}
+    {% extends "base.html" %}
+{% endif %}
+
+{% block content %}
+<!-- code in here to display a list of loans -->
+<!-- loanlist is the variable passed in containing list of loans -->
+
+</br>
+
+<h2>Book Loan Sumaary</h2>
+<h3> Summary of number of times each book on loan </h3>
+
+<!-- Table -->
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Book ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Times on loan</th>
+
+        </tr>
+
+
+    </thead>
+    <tbody>   
+        
+    <!-- Getting data from booklist and fill them into rows -->
+        
+    {% for book in summary %}
+
+        {% set title=book[0] %}
+        {% set bookid=book[1] %}
+        {% set times=book[2] %}
+        <tr>
+            {% for entry in [bookid, title, times] %}
+                <td scope="row">{{entry}}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+
+    
+
+    </tbody>
+</table>
+
+
+{% endblock %}
