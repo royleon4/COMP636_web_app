@@ -7,14 +7,15 @@ from features import *
 
 from flask import render_template
 
-from webforms import SearchForm
+from webforms import SearchBookForm
 
 
 todaydate = datetime.now().date()
 
 def home():
     # print(request.url_rule, request.endpoint)
-    return render_template("base.html")
+    form=SearchBookForm()
+    return render_template("base.html", form=form)
 
 
 
@@ -25,7 +26,7 @@ def listbooks():
 
 
 def search():
-    form = SearchForm()
+    form = SearchBookForm()
     if form.validate_on_submit():
         searched = form.searched.data
         searched_list = search_func(searched)

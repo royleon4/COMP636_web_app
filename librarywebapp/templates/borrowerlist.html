@@ -18,14 +18,18 @@
 <h3>Search borrowers</h3>
 
 <form method="POST" action="{{ url_for('searchBorrowers')}}" class="d-flex">
-    {{ form.hidden_tag() }}
-  <input class="d-inline-flex p-2 " type="search" placeholder="Search" aria-label="Search" name="searchedBorrowers" required>
-  <select class="form-select" id="selectedType" name="selectedType" required>
-    <option value="" selected>Type</option>
-    <option value="Name">Name</option>
-    <option value="ID">ID</option>
-  </select>
-  <button class="btn btn-outline-secondary" type="submit">Search</button>
+    {{ form.csrf_token }}
+    <div>&nbsp;&nbsp; {{ form.searchedBorrowers(class="d-inline-flex p-2") }}</div>
+
+    {% for subfield in form.selectedTypeRadio %}
+            {{ subfield.label(class="d-inline-flex p-2") }}
+            {{ subfield(class="d-inline-flex p-2", style=" border: 5px solid black;") }}      
+
+    {% endfor %}
+
+    <div>&nbsp;&nbsp;{{ form.submit(class="btn btn-outline-secondary ") }}</div>
+
+
 </form>
 
 </br>

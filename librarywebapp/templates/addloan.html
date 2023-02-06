@@ -13,44 +13,36 @@
 <!-- URL for submission (action) of form should be loan/add -->
 
 <div class="w-50 p-3 text-center">
-<form method="post">
+<form action="/staff/loan/add" method="post">
   <!-- Borrower input -->
-  <div class="form-outline mb-4">
-    <select aria-label="State" class="form-select" name="borrower" id="borrower" required>
-
-      
-      <option value="" selected>Please Select a borrower</option>
-      {% for borrower in borrowers%}
-          <option value={{borrower[0]}}>{{ borrower[1] }} {{ borrower[2] }}</option>
+  {{ form.csrf_token }}
   
-      {% endfor %}
-    </select>
+
+
+  <div class="form-outline mb-4">
+    {{ form.borrower(class="form-select") }}
     <label class="form-label" >Select a borrower, please.</label>
   </div>
 
   <!-- Book input -->
   <div class="form-outline mb-4">
-    <select aria-label="State" class="form-select" id="book" name="book" required>
-
-      <option value="" selected>Please Select a book</option>
-      {% for book in books %}
-          <option value="{{book[0]}}"> {{ book[0] }}: {{ book[4] }} / {{ book[2] }}  </option>
-  
-      {% endfor %}
-    </select>
+    {{ form.book(class="form-select") }}
     <label class="form-label" >Select a book, please.</label>
   </div>
 
   <!-- Date input -->
   <div class="form-outline mb-4">
+
     <input type="date" id="book_loan_date" name="book_loan_date"
        value= {{loandate}}
        min="2018-01-01" max="2040-12-31" disabled>
+       
        <label class="form-label" >Date is automatically set to today.</label>
   </div>
 
   <!-- Submit button -->
-  <button type="submit"  formaction="/staff/loan/add"  class="btn btn-primary btn-block">Submit</button>
+  {{ form.submit(class="btn btn-primary btn-block") }}
+
 </form>
 
 </div>

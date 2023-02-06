@@ -1,7 +1,6 @@
 # This file contains reusable functions shared by staff and public
 # This is the only file deals with database
 
-import re
 import mysql.connector
 import connect
 
@@ -17,22 +16,6 @@ def getCursor():
 
 def listbooks_func():
     connection = getCursor()
-
-
-    # sql_books = "SELECT * FROM books;"
-
-    # sql_loansum = """SELECT *, ls.loantimes FROM books b 
-    #             inner join 
-    #                 (Select title, bookid as ID, sum(Times) as loantimes from (select b.booktitle as title, b.bookid as bookid, count(bc.bookcopyid) as Times 
-    #                 FROM bookcopies bc 
-    #                 left join loans l on bc.bookcopyid=l.bookcopyid
-    #                 inner join books b on bc.bookid=b.bookid
-    #                 group by bc.bookcopyid) as cpt 
-    #                 group by bookid 
-    #                 order by bookid) as ls
-    #             WHERE ls.ID=b.bookid;
-                    
-    #                 """
                 
     connection.execute("SELECT * FROM books;")
     bookList = connection.fetchall()
@@ -49,6 +32,7 @@ inner join books b on b.bookid = bc.bookid
  WHERE bookcopyid not in (SELECT bookcopyid from loans where returned <> 1) OR bc.format in ('ebook', 'Audio Book');"""
     connection.execute(sql)
     bookList = connection.fetchall()
+    
     return borrowerList, bookList
 
 def addloan_func(borrowerid, bookid, datetime):
@@ -78,24 +62,37 @@ def currentloans_func():
     return loanList
     
 
-def search_func(searched):
+def search_func(searched, type):
 
     connection = getCursor()
-    sql = """SELECT * FROM books WHERE booktitle LIKE '%{}%' OR author LIKE '%{}%'""".format(searched, searched)
+    where_clause = ""
+    
+    if type == 1:
+        where_clause = f"booktitle LIKE '%{searched}%'"
+    elif type ==2:
+        where_clause = f"author LIKE '%{searched}%'"
+    else:
+        where_clause = f"booktitle LIKE '%{searched}%' OR author LIKE '%{searched}%'"
+
+    sql = """SELECT * FROM books WHERE {}""".format(where_clause)
     connection.execute(sql)
     searched_list = connection.fetchall()
     return searched_list
 
 def bookcopies_func(book_id):
     connection = getCursor()
-    sql=""" select  
-                bc.bookcopyid, bc.format, l.returned, max(l.loandate)
-            from bookcopies bc
-                inner join books b on bc.bookid = b.bookid
-                    left join loans l on bc.bookcopyid = l.bookcopyid
-            where b.bookid = {}
-            group by l.bookcopyid
-            order by l.loandate;""".format(book_id)
+    sql=""" SELECT 
+            bc.bookcopyid, bc.format, l.returned, MAX(l.loandate)
+        FROM
+            bookcopies bc
+                INNER JOIN
+            books b ON bc.bookid = b.bookid
+                LEFT JOIN
+            loans l ON bc.bookcopyid = l.bookcopyid
+        WHERE
+            b.bookid = {}
+        GROUP BY bc.bookcopyid
+        ORDER BY l.loandate;""".format(book_id)
     connection.execute(sql)
     bookcopies = connection.fetchall()
     connection.execute("select booktitle, author from books where bookid = {}".format(book_id))
@@ -152,28 +149,19 @@ def createBorrower_func(
         "dateofbirth":DoB, "housenumbername":house, 
         "street":street, "town":town, 
         "city": city, "postalcode": postcode }
-
     sql = "INSERT INTO borrowers ("
     values = " VALUES ( "
-
-    print(update_list)
-
     for field, key in update_list.items():
         print(sql + values)
         if key == "" or key is None:
             return 500
         sql += f"{field}, "
         values += f"'{key}', "
-
     sql, values = sql.strip(', '), values.strip(', ')
-
     sql += ") "
     values += ")" 
-
-    # print(sql + values)
-
+    
     connection = getCursor()
-
     connection.execute(sql+values)
 
     return 200

@@ -27,59 +27,57 @@
     <label> ID : {{id}}</label>
 
     <form  action="{{ url_for('updateBorrower', borrower_id=id) }}" method="post">
-        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
       <!-- Borrower input -->
+
         <div class="form-outline mb-4">
-            <label>First Name</label>
+            <label>{{ form.firstname.label() }}</label>
             <label> ({{ firstname }}) </label>
-            <input class="form-control me-2" type="input" placeholder="First Name" aria-label="firstname" name="firstname">
+            {{ form.firstname(class="form-control me-2") }}
         </div>
 
         <div class="form-outline mb-4">
-            <label>Family Name</label>
-            <label>({{familyname}})</label>
-            <input class="form-control me-2" type="input" placeholder="Family Name" aria-label="familyname" name="familyname">
+            <label>{{ form.familyname.label() }}</label>
+            <label> ({{ familyname }}) </label>
+            {{ form.familyname(class="form-control me-2") }}
         </div>
 
         <div class="form-outline mb-4">
-            <label>DoB</label>
-            <label> ({{dob}}) </label>
-
-            <input class="form-control me-2" type="date" id="dob" aria-label="DoB" name="dob"
-               value= {{dob}}
-               min="1950-01-01" max="2040-12-31" />
+            <label>{{ form.dateofbirth.label() }}</label>
+            <label> ({{ dob }}) </label>
+            {{ form.dateofbirth( class="form-control me-2 datepicker", value=dob, type="date") }}
         </div>
 
         <div class="form-outline mb-4">
-            <label>House Number/Name</label>
-            <label> ({{house}}) </label>
-            <input class="form-control me-2" type="input" placeholder="House Number/Name" aria-label="housenumber" name="housenumber">
+            <label>{{ form.housenumber.label() }}</label>
+            <label> ({{ house }}) </label>
+            {{ form.housenumber( class="form-control me-2" ) }}
         </div>
 
         <div class="form-outline mb-4">
-            <label>Street</label>
-            <label> ({{street}}) </label>
-            <input class="form-control me-2" type="input" placeholder="Street" aria-label="street" name="street">
+            <label>{{ form.street.label() }}</label>
+            <label> ({{ street }}) </label>
+            {{ form.street( class="form-control me-2" ) }}
         </div>
 
         <div class="form-outline mb-4">
-            <label>Town</label>
-            <label>({{town}}) </label>
-            <input class="form-control me-2" type="input" placeholder="Town" aria-label="town" name="town">
+            <label>{{ form.town.label() }}</label>
+            <label> ({{ town }}) </label>
+            {{ form.town( class="form-control me-2" ) }}
         </div>
 
         <div class="form-outline mb-4">
-            <label>City</label>
-            <label> ({{city}}) </label>
-            <input class="form-control me-2" type="input" placeholder="City" aria-label="city" name="city">
+            <label>{{ form.city.label() }}</label>
+            <label> ({{ city }}) </label>
+            {{ form.city( class="form-control me-2" ) }}
         </div>
 
         <div class="form-outline mb-4">
-            <label>Postal Code</label>
-            <label> ({{postcode}})</label>
-            <input class="form-control me-2" type="input" placeholder="Postal Code" aria-label="postcode" name="postcode">
+            <label>{{ form.postcode.label() }}</label>
+            <label> ({{ postcode }}) </label>
+            {{ form.postcode( class="form-control me-2" ) }}
         </div>
-    
+
       <!-- Submit button -->
       <button type="submit" class="btn btn-primary btn-block">
         Submit</button>

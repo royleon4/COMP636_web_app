@@ -1,12 +1,5 @@
 from flask import Flask
-from flask import render_template
-
-
-from flask import url_for
-import re
-from webforms import SearchForm
-
-
+from webforms import SearchBookForm
 import public, staff
 
 app = Flask(__name__)
@@ -17,8 +10,8 @@ app.config['SECRET_KEY'] = "my super secret key that no one is supposed to know"
 # Pass stuff to Nav Bar
 @app.context_processor
 def base():
-    form = SearchForm()
-    return dict(form=form, staff='staff')
+    form = SearchBookForm()
+    return dict(SearchBookForm=form, staff='staff')
 
 """For Public access"""
 
@@ -28,6 +21,7 @@ app.add_url_rule('/search', view_func=public.search, methods=['POST'])
 app.add_url_rule('/bookcopies/<int:book_id>', view_func=public.bookcopies)
 
 """for Staff access"""
+
 pstaff = '/staff'
 
 app.add_url_rule('/staff', view_func=staff.staff)
