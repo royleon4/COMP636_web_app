@@ -5,7 +5,7 @@ from wtforms.widgets import TextArea
 
 # A Search Form to search books
 class SearchBookForm(FlaskForm):
-	searched = StringField("Searched", validators=[DataRequired()])
+	searched = StringField("Searched", render_kw={"placeholder": "Search Books!"}, validators=[DataRequired()])
 	searchedType = SelectField("Type", choices=[ ("All", "All"), ("Title", "Title"), ("Author", "Author")], validators=[DataRequired()], default="All")
 	submit = SubmitField("Search")
 
