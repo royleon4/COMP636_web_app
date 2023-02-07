@@ -27,9 +27,11 @@ def listbooks():
 
 def search():
     form = SearchBookForm()
+    types = {"Title":1, "Author":2, "All":0}
     if form.validate_on_submit():
         searched = form.searched.data
-        searched_list = search_func(searched)
+        searchedType = types[form.searchedType.data]
+        searched_list = search_func(searched, searchedType)
 
     return render_template("search.html", form=form, booklist=searched_list, searched = searched)
 
