@@ -1,17 +1,13 @@
 from flask import Flask
-from webforms import SearchBookForm
 import public, staff
 
 app = Flask(__name__)
 
-# Secret Key!
-app.config['SECRET_KEY'] = "my super secret key that no one is supposed to know"
 
 # Pass stuff to the base page as global variables to function correctly, like navbar.
 @app.context_processor
 def base():
-    form = SearchBookForm()
-    return dict(SearchBookForm=form, staff='staff')
+    return dict( staff='staff')
 
 """For Public access"""
 

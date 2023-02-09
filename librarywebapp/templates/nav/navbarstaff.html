@@ -42,13 +42,16 @@
 
             </ul>
             <form method="POST" action="{{ url_for('staffsearch')}}" class="d-flex">
-                {{ SearchBookForm.csrf_token }}
-                {{ SearchBookForm.searched(class="form-control me-2") }}
-                <div class="btn-group" role="group"></div>
 
-               {{ SearchBookForm.searchedType(class="form-control me-2") }}      
-
-              </div>
-              {{ SearchBookForm.submit(class="btn btn-outline-secondary") }}   
-            </form>
+              <div class="btn-group" role="group"></div>
+              <input class="form-control me-2" type="search" name="searched" id="searched" placeholder="Search Books!" required>
+              <select  class="form-control me-2" name="selectedtype" id="selectedtype" required>
+                <option value="All" selected>All</option>
+                <option value="Title">Title</option>
+                <option value="Author">Author</option>
+          
+            </div>
+            <input type="submit" class="btn btn-outline-secondary">
+          
+          </form>
           </div>

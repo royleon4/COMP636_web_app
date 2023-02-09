@@ -15,22 +15,27 @@
 <h3>A list of all borrowers</h3>
 </br>
 
-<h3>Search borrowers</h3>
-
 <form method="POST" action="{{ url_for('searchBorrowers')}}" class="d-flex">
-    {{ form.csrf_token }}
-    <div>&nbsp;&nbsp; {{ form.searchedBorrowers(class="d-inline-flex p-2") }}</div>
 
-    {% for subfield in form.selectedTypeRadio %}
-            {{ subfield.label(class="d-inline-flex p-2") }}
-            {{ subfield(class="d-inline-flex p-2", style=" border: 5px solid black;") }}      
+    <div>&nbsp;&nbsp; <input class="d-inline-flex p-2" type="search" id="searchedborrower" name="searchedborrower" placeholder="Search Borrowers!"> </div>
+    &nbsp;&nbsp;
+    <div>
 
-    {% endfor %}
+        <label for="typechoice1" class="d-inline-flex p-2">Name</label>
+    <input type="radio" id="typechoice1" name="searchedtype" value="Name" checked class="d-inline-flex p-2", style=" border: 5px solid black;" />
+    &nbsp;
+        <label for="typechoice2" class="d-inline-flex p-2">ID</label>
+    <input type="radio" id="typechoice2" name="searchedtype" value="ID" class="d-inline-flex p-2", style=" border: 5px solid black;"/>
 
-    <div>&nbsp;&nbsp;{{ form.submit(class="btn btn-outline-secondary ") }}</div>
+
+    </div>
+
+
+    <div>&nbsp;&nbsp;<input type="submit" class="btn btn-outline-secondary " value="Search!"> </div>
 
 
 </form>
+
 
 </br>
 
@@ -38,8 +43,7 @@
     <thead>
         <tr>
             <th scope="col">Borrower ID</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Family Name</th>
+            <th scope="col">Name</th>
             <th scope="col">Date of Birth</th>
             <th scope="col">House Number/Name</th>
             <th scope="col">Street</th>

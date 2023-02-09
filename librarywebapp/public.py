@@ -1,5 +1,3 @@
-
-
 from flask import request, redirect
 from datetime import datetime, timedelta
 
@@ -7,15 +5,13 @@ from features import *
 
 from flask import render_template
 
-from webforms import SearchBookForm
 
 
 todaydate = datetime.now().date()
 
 def home():
-    # print(request.url_rule, request.endpoint)
-    form=SearchBookForm()
-    return render_template("base.html", form=form)
+
+    return render_template("base.html")
 
 
 
@@ -26,14 +22,14 @@ def listbooks():
 
 
 def search():
-    form = SearchBookForm()
+    searched = request.form.get("searched")
     types = {"Title":1, "Author":2, "All":0}
-    if form.validate_on_submit():
-        searched = form.searched.data
-        searchedType = types[form.searchedType.data]
-        searched_list = search_func(searched, searchedType)
+    searchedType = types[request.form.get("selectedtype")]
 
-    return render_template("search.html", form=form, booklist=searched_list, searched = searched)
+
+    searched_list = search_func(searched, searchedType)
+
+    return render_template("search.html", booklist=searched_list, searched = searched)
 
 
 def bookcopies(book_id):

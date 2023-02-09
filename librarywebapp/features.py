@@ -53,12 +53,24 @@ def addloan_func(borrowerid, bookid, datetime):
     cur = getCursor()
     cur.execute("INSERT INTO loans (borrowerid, bookcopyid, loandate, returned) VALUES(%s,%s,%s,0);",
                 (borrowerid, bookid, str(datetime),))
-    return
 
 
 def listborrowers_func():
+    sql = """SELECT 
+                borrowers.borrowerid,
+                CONCAT(borrowers.firstname,
+                        ' ',
+                        borrowers.familyname),
+                borrowers.dateofbirth,
+                borrowers.housenumbername,
+                borrowers.street,
+                borrowers.town,
+                borrowers.city,
+                borrowers.postalcode
+            FROM
+                borrowers;"""
     connection = getCursor()
-    connection.execute("SELECT * FROM borrowers;")
+    connection.execute(sql)
     borrowerList = connection.fetchall()
     return borrowerList
 
@@ -137,7 +149,22 @@ def searchBorrowers_func(searched, type):
     connection = getCursor()
     sql = ""
     if type == "Name":
-        sql = """ SELECT * FROM borrowers WHERE firstname LIKE '%{}%' OR familyname LIKE '%{}%' """.format(
+        sql = """ SELECT 
+                    borrowers.borrowerid,
+                    CONCAT(borrowers.firstname,
+                            ' ',
+                            borrowers.familyname),
+                    borrowers.dateofbirth,
+                    borrowers.housenumbername,
+                    borrowers.street,
+                    borrowers.town,
+                    borrowers.city,
+                    borrowers.postalcode
+                FROM
+                    borrowers
+                WHERE
+                    CONCAT(firstname, ' ', familyname) LIKE '%{}%'
+                        OR familyname LIKE '%{}%'""".format(
             searched, searched)
     if type == "ID":
         sql = """ SELECT * FROM borrowers WHERE borrowerid = {} """.format(
@@ -168,6 +195,9 @@ def updateBorrower_func(
 
     sql = sql.strip(', ')
     sql += f" WHERE borrowerid = {id}"
+    
+
+    print(sql)
 
     connection = getCursor()
 

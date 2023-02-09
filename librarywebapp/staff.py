@@ -2,48 +2,32 @@ from flask import request, redirect, flash
 from datetime import datetime, timedelta
 from features import *
 from flask import render_template
-from webforms import SearchBookForm, SearchBorrowersForm, UpdateBorrowerForm as bf, CreateBorrowerForm, AddLoanForm
 
 todaydate = datetime.now().date()
 prefix = '/' + 'staff'
 
 
 def staff():
-    form=SearchBookForm()
-    return render_template("staff.html", form=form)
+    
+    return render_template("staff.html")
 
 
 def staffloanbook():
 
-    form = AddLoanForm()
-    borrowerList, bookList = loanbook_func()
 
-    for borrower in borrowerList:
-        b_id = borrower[0]
-        name = f"{borrower[1]} {borrower[2]}"
-        form.borrower.choices.append((b_id, name))
-    
-    for book in bookList:
-        b_id = book[0]
-        title = f"{b_id}: {book[4]} / {book[2]}"
-        form.book.choices.append((b_id, title))
+    borrowerlist, booklist = loanbook_func()
 
-    return render_template("/addloan.html", form=form, loandate = todaydate)
+    return render_template("/addloan.html", booklist=booklist, borrowerlist=borrowerlist, loandate = todaydate)
 
 def addloan():
 
-    form = AddLoanForm()
+    borrowerid = request.form.get("selectborrower")
+    bookid = request.form.get("selectbook")
+    # loandate = request.form.get("book_loan_date")
 
-    if form.validate_on_submit():
-        borrowerid = form.borrower.data
-        bookid = form.book.data
-        addloan_func(borrowerid, bookid, todaydate)
-        return redirect(f"{prefix}/currentloans")
 
-    for err, decr in form.errors.items():
-        print(err, decr)
+    return redirect(f"{prefix}/currentloans")
 
-    return
     
 
     
@@ -66,9 +50,9 @@ def stafflistbooks():
 
 def listborrowers():
     borrowerList = listborrowers_func()
-    form = SearchBorrowersForm()
+
     
-    return render_template("borrowerlist.html", borrowerlist = borrowerList, form=form)
+    return render_template("borrowerlist.html", borrowerlist = borrowerList)
 
 
 def staffcurrentloans():
@@ -79,14 +63,15 @@ def staffcurrentloans():
 # Create a search function
 
 def staffsearch():
-    form = SearchBookForm()
-    types = {"Title":1, "Author":2, "All":0}
-    if form.validate_on_submit():
-        searched = form.searched.data
-        searchedType = types[form.searchedType.data]
-        searched_list = search_func(searched, searchedType)
 
-    return render_template("search.html", form=form, booklist=searched_list, searched = searched)
+    searched = request.form.get("searched")
+    types = {"Title":1, "Author":2, "All":0}
+    searchedType = types[request.form.get("selectedtype")]
+
+
+    searched_list = search_func(searched, searchedType)
+
+    return render_template("search.html", booklist=searched_list, searched = searched)
 
 
 def staffbookcopies(book_id):
@@ -100,87 +85,73 @@ def staffbookcopies(book_id):
     today=todaydate)
 
 def searchBorrowers():
-    form = SearchBorrowersForm()
 
-    searched = form.searchedBorrowers.data
-    typeOfSearch = form.selectedTypeRadio.data
 
-    if typeOfSearch == "ID" and not searched.isdigit():
+    searched = request.form.get("searchedborrower")
+    typeofsearched = request.form.get("searchedtype")
+
+    
+
+    if typeofsearched == "ID" and not searched.isdigit():
         flash('Enter digits when searching for ID, please!')
-        return render_template("borrowerlist.html", form=form)
+        return render_template("borrowerlist.html")
         
-
-
-    if form.validate_on_submit():
-        searched = form.searchedBorrowers.data
-        typeOfSearch = form.selectedTypeRadio.data
-        borrower = searchBorrowers_func(searched, typeOfSearch)
+    borrower = searchBorrowers_func(searched, typeofsearched)
         
-        return render_template("borrowerlist.html", borrowerlist=borrower, form=form)
-    return render_template("borrowerlist.html", form=form)
+    return render_template("borrowerlist.html", borrowerlist=borrower)
+
 
 def updateBorrowerForm(borrower_id):
 
     borrower = searchBorrowers_func(borrower_id, "ID")
-    form = bf()
-
-    form.dateofbirth.default = borrower[0][3]
-
-    print(form.dateofbirth.default)
 
     return render_template(
         "updateborrower.html", 
-        borrower=borrower, form=form)
+        borrower=borrower)
 
 def updateBorrower(borrower_id):
 
-    form = bf()
 
-    if form.validate_on_submit():
-        ftn=form.firstname.data
-        fyn=form.familyname.data
-        dob=form.dateofbirth.data
-        house=form.housenumber.data
-        street=form.street.data
-        city=form.city.data
-        town=form.town.data
-        poco=form.postcode.data
+    ftn = request.form.get("fname")
+    fyn = request.form.get("lname")
+    dob = request.form.get("dob")
+    house = request.form.get("house")
+    street = request.form.get("street")
+    town = request.form.get("town")
+    city = request.form.get("city")
+    poco = request.form.get("pcode")
 
-        code = updateBorrower_func(borrower_id, ftn, fyn, dob, 
+
+    code = updateBorrower_func(borrower_id, ftn, fyn, dob, 
         house, street, town, city, poco)
-        print(f'CODE: {code}')
+    print(f'CODE: {code}')
 
-    print(form.errors)
-    print(form.dateofbirth.data)
     
     return redirect(f"{prefix}/listborrowers")
 
 def newBorrower():
-    form = CreateBorrowerForm()
 
-    return render_template("addborrower.html", form=form)
+    return render_template("addborrower.html")
     
 
 
 def createBorrower():
 
-    form = CreateBorrowerForm()
 
-    if form.validate_on_submit():
-        ftn=form.firstname.data
-        fyn=form.familyname.data
-        dob=form.dateofbirth.data
-        house=form.housenumber.data
-        street=form.street.data
-        city=form.city.data
-        town=form.town.data
-        poco=form.postcode.data
+    ftn = request.form.get("fname")
+    fyn = request.form.get("lname")
+    dob = request.form.get("dob")
+    house = request.form.get("house")
+    street = request.form.get("street")
+    town = request.form.get("town")
+    city = request.form.get("city")
+    poco = request.form.get("pcode")
 
-        code = createBorrower_func(ftn, fyn, dob, 
+    code = createBorrower_func(ftn, fyn, dob, 
         house, street, town, city, poco)
-        print(f'CODE: {code}')
-        
-    flash(form.errors)
+    print(f'CODE: {code}')       
+
+
     return redirect(f"{prefix}/listborrowers")
     
 
@@ -200,8 +171,6 @@ def overdueloans():
 
 def loansummary():
     table = loansummary_func()
-
-    # print(table)
 
     return render_template("loansummary.html", summary=table)
 

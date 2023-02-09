@@ -27,57 +27,64 @@
     <label> ID : {{id}}</label>
 
     <form  action="{{ url_for('updateBorrower', borrower_id=id) }}" method="post">
-        {{ form.csrf_token }}
+
       <!-- Borrower input -->
-
         <div class="form-outline mb-4">
-            <label>{{ form.firstname.label() }}</label>
-            <label> ({{ firstname }}) </label>
-            {{ form.firstname(class="form-control me-2") }}
+            <label>First Name</label>
+            <label>({{ firstname }})</label>
+
+            <input type="text" class="form-control me-2" id="fname" name="fname" placeholder="First Name" >
+
         </div>
 
         <div class="form-outline mb-4">
-            <label>{{ form.familyname.label() }}</label>
-            <label> ({{ familyname }}) </label>
-            {{ form.familyname(class="form-control me-2") }}
+            <label>Family Name</label>
+            <label>({{ familyname }})</label>
+
+            <input type="text" class="form-control me-2" id="lname" name="lname" placeholder="Family Name" >
+
         </div>
 
         <div class="form-outline mb-4">
-            <label>{{ form.dateofbirth.label() }}</label>
-            <label> ({{ dob }}) </label>
-            {{ form.dateofbirth( class="form-control me-2 datepicker", value=dob, type="date") }}
+            <label>Date of Birth</label>
+            <label>({{ dob }})</label>
+            <input type="date" class="form-control me-2" id="dob" name="dob" placeholder="Date of Birth" >
+
         </div>
 
         <div class="form-outline mb-4">
-            <label>{{ form.housenumber.label() }}</label>
-            <label> ({{ house }}) </label>
-            {{ form.housenumber( class="form-control me-2" ) }}
+            <label>House Numer / Name</label>
+            <label>({{ house }})</label>
+            <input type="text" class="form-control me-2" id="house" name="house" placeholder="House Numer / Name" >
         </div>
 
         <div class="form-outline mb-4">
-            <label>{{ form.street.label() }}</label>
-            <label> ({{ street }}) </label>
-            {{ form.street( class="form-control me-2" ) }}
+            <label> Street </label>
+            <label>({{ street }})</label>
+            <input type="text" class="form-control me-2" id="street" name="street" placeholder="Street" >
         </div>
 
         <div class="form-outline mb-4">
-            <label>{{ form.town.label() }}</label>
-            <label> ({{ town }}) </label>
-            {{ form.town( class="form-control me-2" ) }}
+            <label>Town</label>
+            <label>({{ town }})</label>
+            <input type="text" class="form-control me-2" id="town" name="town" placeholder="Town" >
+
         </div>
 
         <div class="form-outline mb-4">
-            <label>{{ form.city.label() }}</label>
-            <label> ({{ city }}) </label>
-            {{ form.city( class="form-control me-2" ) }}
+            <label>City</label>
+            <label>({{ city }})</label>
+            <input type="text" class="form-control me-2" id="city" name="city" placeholder="City" >
+
         </div>
 
         <div class="form-outline mb-4">
-            <label>{{ form.postcode.label() }}</label>
-            <label> ({{ postcode }}) </label>
-            {{ form.postcode( class="form-control me-2" ) }}
+            <label>Postal Code</label>
+            <label>({{ postcode }})</label>
+            <input type="number" class="form-control me-2" id="pcode" name="pcode" placeholder="Postal Code" >
         </div>
 
+    
       <!-- Submit button -->
       <button type="submit" class="btn btn-primary btn-block">
         Submit</button>

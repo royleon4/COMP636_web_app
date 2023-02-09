@@ -105,9 +105,6 @@ This report will focus on 3 points:
     - app.py
         - acts like the medium, or a router to wire everything up, so in this file we can see all the routes and their related templates. 
         - we may add validator or middleware here in the future if it is needed to create more data safety and avoid some security issues. 
-- Webforms 
-    - webform has been used because I assumed there should be a lot of forms(or fields), therefore I needed one place that allow me to change the requirements of each datafield. 
-    - webform sucessfully solved the problem and I believe its good to use this to achieve a cleaner code and its also an extension of Flask, so it's not out of the allowed techonlogies scope.
 - Rusable templates
     - Some templated share partial contents, but not totally identical, so I decided to take out the identical part and then include them when needed. 
         - booktable.html will only returns the table of books, so it can be used (included) by booklist.html, search.html. Therefore, once there is a need to modify the table, booktable.html is the only place needs modifications. 
