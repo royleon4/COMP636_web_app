@@ -24,6 +24,7 @@ def addloan():
     borrowerid = request.form.get("selectborrower")
     bookid = request.form.get("selectbook")
     loandate = request.form.get("loandate")
+    addloan_func(borrowerid, bookid, loandate)
 
 
     return redirect(f"{prefix}/currentloans")

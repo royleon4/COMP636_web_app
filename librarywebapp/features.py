@@ -50,9 +50,13 @@ def loanbook_func():
 
 def addloan_func(borrowerid, bookid, datetime):
 
+    print(borrowerid, bookid, datetime)
+
     cur = getCursor()
     cur.execute("INSERT INTO loans (borrowerid, bookcopyid, loandate, returned) VALUES(%s,%s,%s,0);",
                 (borrowerid, bookid, str(datetime),))
+
+
 
 
 def listborrowers_func():
