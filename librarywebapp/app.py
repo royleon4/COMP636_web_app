@@ -17,7 +17,7 @@ def base():
 
 app.add_url_rule('/', view_func=public.home)
 app.add_url_rule('/listbooks', view_func=public.listbooks)
-app.add_url_rule('/search/<str:searched>&<str:type>', view_func=public.search, methods=['POST'])
+app.add_url_rule('/search', view_func=public.search, methods=['POST'])
 # app.add_url_rule('/listbooks?<str:searched>&<int:type>', view_func=public.search)
 app.add_url_rule('/bookcopies/<int:book_id>', view_func=public.bookcopies)
 
