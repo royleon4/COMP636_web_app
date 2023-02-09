@@ -1,6 +1,6 @@
 
 
-from flask import request, redirect, flash
+from flask import request, redirect
 from datetime import datetime, timedelta
 
 from features import *
@@ -20,32 +20,18 @@ def home():
 
 
 def listbooks():
-
     
     booklist = listbooks_func()   
     return render_template("booklist.html", booklist = booklist)
 
 
-def search(searched, type):
+def search():
     form = SearchBookForm()
-    form.searched.data = searched
-    types = {1: "Title", 2: "Author", 0:"All"}
-    if type in types.keys():
-        form.searchedType = type
-        searched_list = search_func(searched, type)
-        return render_template("search.html", form=form, booklist=searched_list, searched = searched)
-    else:
-        flash("the type is not a valid choice!")
-        
-        return listbooks()
-        
-        
-    # if form.validate_on_submit():
-    #     searched = form.searched.data
-    #     searchedType = types[form.searchedType.data]
-    #     searched_list = search_func(searched, searchedType)
+    if form.validate_on_submit():
+        searched = form.searched.data
+        searched_list = search_func(searched)
 
-    
+    return render_template("search.html", form=form, booklist=searched_list, searched = searched)
 
 
 def bookcopies(book_id):
