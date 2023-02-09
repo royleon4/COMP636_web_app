@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, DateField, RadioField, IntegerField
-from wtforms.validators import DataRequired, EqualTo, Length, Regexp
-from wtforms.widgets import TextArea
+from wtforms.validators import DataRequired, Length
 
 # A Search Form to search books
 class SearchBookForm(FlaskForm):
@@ -18,10 +17,6 @@ class AddLoanForm(FlaskForm):
 	borrower = SelectField("Borrower", choices=[("","Pick a borrower!")], validate_choice=False, validators=[DataRequired()], default="")
 	book = SelectField("Book", choices=[("","Pick a Book Copy!")], validate_choice=False, validators=[DataRequired()], default="", )
 	submit = SubmitField("submit")
-	pass
-	
-	
-	
 
 class UpdateBorrowerForm(FlaskForm):
 
