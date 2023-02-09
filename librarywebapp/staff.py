@@ -23,7 +23,7 @@ def addloan():
 
     borrowerid = request.form.get("selectborrower")
     bookid = request.form.get("selectbook")
-    # loandate = request.form.get("book_loan_date")
+    loandate = request.form.get("loandate")
 
 
     return redirect(f"{prefix}/currentloans")
