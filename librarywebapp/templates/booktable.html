@@ -1,4 +1,5 @@
 {% set baseurl = (request.url_rule|string()).split("/")[1] %}
+{% set endpoint = (request.url_rule|string()).split("/")[2]%}
 
 <!-- Table -->
 
@@ -11,7 +12,7 @@
             <th scope="col">Type</th>
             <th scope="col">Year of Publication</th>
             <th scope="col">Description</th>
-            {% if baseurl == staff %}
+            {% if baseurl == staff and endpoint != "search" %}
                 <th scope="col">Loan times</th>
             {% endif %}
         </tr>
