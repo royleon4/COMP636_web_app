@@ -61,13 +61,13 @@ This report will focus on 3 points:
     ***
 
     Borrowers
-    | Routes | Method| Template |
-    | ----------- | -----| ---|
-    | /listborrowers | Get| borrowerlist.html|
-    | /borrower/{borrower_id} | Get | updateborrower.html|
-    | /borrower/update/{borrower_id} | Post | redirects to borrowerlist.html|
-    | /newborrower | Get | newborrower.html|
-    | /borrower/create | Post | redirects to borrowerlist.html|
+    | Routes | Method| Template | Data |
+    | ----------- | -----| ---| --- |
+    | /listborrowers | Get| borrowerlist.html| list of borrowers to the template|
+    | /borrower/{borrower_id} | Get | updateborrower.html| a detailed list of a chosen borrower|
+    | /borrower/update/{borrower_id} | Post | redirects to borrowerlist.html| the route activate the function to collect data from the form filled on the template|
+    | /newborrower | Get | newborrower.html| generate a form to fill, no data is passed|
+    | /borrower/create | Post | redirects to borrowerlist.html| the route activate the function to collect data from the form filled on the template|
 
     1. **/listborrowers** lists all borrowers on borrowerlist page.
     2. **/borrower/{borrower_id}** and **/newborrower** show the form for the user to type in in order to make changes, once they hit the submit button on those two pages, Post action of /borrower/update/{borrower_id} or /borrower/create will be activated and redirects to borrowerlist.html page to see the changes immediately.
@@ -75,11 +75,11 @@ This report will focus on 3 points:
     ***
 
     Summary
-    | Routes | Method| Template |
-    | ----------- | -----| ---|
-    | /summary/book | Get| bookcummary.html|
-    | /summary/borrower | Get | borrowersummary.html|
-    | /overdueloans | Get | overdueloans.html |
+    | Routes | Method| Template | Data |
+    | ----------- | -----| ---| --- |
+    | /summary/book | Get| booksummary.html| a list of tuples, each contains title, bookid, and number of time on loans of a book|
+    | /summary/borrower | Get | borrowersummary.html| a list of tuples, each contains borrower ID, name, and number of loans of a borrower |
+    | /overdueloans | Get | overdueloans.html | pass in currentloan list to the template and reprocessed by jinja to list all overdue loans|
 
     1. **/summary/book** lists all book with number of times they have been on loan.
     2. **/summary/borrower** lists all borrowers with number of times they have loaned.
@@ -100,7 +100,7 @@ This report will focus on 3 points:
     - They both act like controllers in this webapp.
     - the reason of having two controllers is to have better data flow and avoid them to communicate to each other while the code is implemented.
     - public.py only worries about how to process data to public users and staff.py only worry about the functionalities for internal users.
-    
+
   - app.py
     - acts like the medium, or a router to wire everything up, so in this file we can see all the routes and their related templates.
     - we may add validator or middleware here in the future if it is needed to create more data safety and avoid some security issues.
